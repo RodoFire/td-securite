@@ -40,6 +40,7 @@ export class Login {
     const { login, motDePasse } = this.formulaire.getRawValue();
     try {
       await this.auth.connecter(login, motDePasse);
+      this.auth.uponConnection()
       const retour = this.route.snapshot.queryParamMap.get('retour');
       await this.router.navigateByUrl(retour ?? '/comptes');
     } catch {
