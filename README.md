@@ -106,6 +106,8 @@ http.csrf(csrf -> csrf.disable())
 3. Écrivez une **guard** (`CanActivateFn`) : sans utilisateur connecté, redirection vers `/login?retour=<url demandée>`. Appliquez-la aux routes `comptes`.
 4. La page `/login` est fournie. Testez-la avec un mauvais mot de passe, puis rechargez la page connecté : que se passe-t-il, et pourquoi ?
 
+La page se recharge 
+
 ## Partie 3 : les rôles
 
 Règles à faire respecter **côté serveur** :

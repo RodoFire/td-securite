@@ -5,6 +5,8 @@ import com.example.banque.compte.CompteRepository;
 import com.example.banque.utilisateur.out.UtilisateurCourant;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,7 @@ public class VirementService {
         return virements.findByCompteId(compteId, pageable).stream().map(VirementDto::de).toList();
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     public VirementDto creer(NouveauVirement demande) {
         Compte compte = comptes.findById(demande.compteId())
                 .orElseThrow(() -> new NoSuchElementException("Compte " + demande.compteId() + " introuvable"));
@@ -40,6 +43,7 @@ public class VirementService {
         return VirementDto.de(virements.save(virement));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public VirementDto valider(Long id) {
         Virement virement = virements.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Virement " + id + " introuvable"));
